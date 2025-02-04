@@ -1,3 +1,48 @@
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 h1 {
   text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#library-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#book-card {
+  background-color: lightgrey;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 5px;
+  width: 200px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+}
+
+#new-book-button {
+  background-color: #555655;
+  color: white;
+  border: none;
+  padding: 0.7em 1vw;
+  font-size: 1vw;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 5px;
+}
+
+#new-book-button:hover {
+  background-color: darkslategrey;
+  color: peru;
 }
