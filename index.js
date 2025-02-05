@@ -23,8 +23,8 @@ function addBookToLibrary(title, author, pages, read) {
 }
 
 // addBookToLibrary("The Great Gatsby", "F. Scott Fitzgerald", 200, "Yes");
-addBookToLibrary("Moby Dick", "Herman Melville", 600, "yes");
-addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, "nope");
+// addBookToLibrary("Moby Dick", "Herman Melville", 600, "yes");
+// addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, "nope");
 
 // console.log(myLibrary);
 
@@ -52,3 +52,10 @@ function displayBooks() {
 }
 
 displayBooks();
+
+const newBookButton = document.getElementById("new-book-button");
+const bookDialog = document.getElementById("book-dialog");
+
+newBookButton.addEventListener("click", () => {
+  bookDialog.showModal();
+});
