@@ -1,4 +1,4 @@
-// Start
+// Constructor function to create a Book object
 function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
@@ -11,34 +11,24 @@ function Book(title, author, pages, read) {
   };
 }
 
-const book1 = new Book("The Hobbit", "J.R.R. Tolkien", 295, "YES");
+const book1 = new Book("The Hobbit", "J.R.R. Tolkien", 295, "YES"); // Example book object
 
-// console.log(book1.info()); // The Hobbit by J.R.R. Tolkien, 295 pages, read.
+const myLibrary = []; // Array to hold all the books in the library
 
-const myLibrary = []; // Create an array of books
-
+// Function to add a new book to the library
 function addBookToLibrary(title, author, pages, read) {
-  const newBook = new Book(title, author, pages, read);
-  myLibrary.push(newBook);
+  const newBook = new Book(title, author, pages, read); // Create a new book object
+  myLibrary.push(newBook); // Add the new book to the library array
 }
 
-// addBookToLibrary("The Great Gatsby", "F. Scott Fitzgerald", 200, "Yes");
-// addBookToLibrary("Moby Dick", "Herman Melville", 600, "yes");
-// addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, "nope");
-
-// console.log(myLibrary);
-
-// Display:
-
+// Function to display all books in the library on the webpage
 function displayBooks() {
-  // Elemnt that stores the data
-  const libraryContainer = document.getElementById("library-container");
-  // Clear old book data
-  libraryContainer.innerHTML = "";
-  // Iterate the library
-  myLibrary.forEach((book) => {
+  const libraryContainer = document.getElementById("library-container"); //Get the container element
+  libraryContainer.innerHTML = ""; // Clear any existing books from the display
+  myLibrary.forEach((book, index) => {
+    // Iterate through each book in the library and display its details
     // Create a Card for each book
-    const bookCard = document.createElement("div");
+    const bookCard = document.createElement("div"); // Create a div for each book
     bookCard.setAttribute("id", "book-card");
     // Insete book content to the card
     bookCard.innerHTML = `
@@ -46,16 +36,51 @@ function displayBooks() {
     <p>- <strong>Author</strong>: ${book.author}</p>
     <p>- <strong>Pages</strong>: ${book.pages}</p>
     <p>- <strong>Status</strong>: ${book.read ? "Read" : "Not Read"}</p>
+    <button class="remove-book" data-index="${index}">Remove</button>
     `;
+
     libraryContainer.appendChild(bookCard);
+
+    const removeButton = bookCard.querySelector(".remove-book");
+    removeButton.addEventListener("click", () => {
+      const indexToRemove = parseInt(removeButton.getAttribute("data-index"));
+      myLibrary.splice(indexToRemove, 1);
+      displayBooks();
+    });
   });
 }
 
-displayBooks();
+// displayBooks();
 
 const newBookButton = document.getElementById("new-book-button");
 const bookDialog = document.getElementById("book-dialog");
 
+const closeBookDialog = document.getElementById("closeDialog");
+
 newBookButton.addEventListener("click", () => {
   bookDialog.showModal();
 });
+
+closeBookDialog.addEventListener("click", () => {
+  bookDialog.close();
+});
+
+const bookForm = document.getElementById("book-form");
+bookForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const title = document.getElementById("title").value;
+  const author = document.getElementById("author").value;
+  const pages = document.getElementById("pages").value;
+  const read = document.getElementById("read").checked ? "yes" : "no";
+
+  addBookToLibrary(title, author, pages, read);
+
+  displayBooks();
+
+  bookDialog.close();
+
+  bookForm.reset();
+});
+
+displayBooks();
