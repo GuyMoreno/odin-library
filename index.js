@@ -11,7 +11,9 @@ function Book(title, author, pages, read) {
   };
 }
 
-const book1 = new Book("The Hobbit", "J.R.R. Tolkien", 295, "YES"); // Example book object
+Book.prototype.toggleReadStatus = function () {
+  this.read = !this.read;
+};
 
 const myLibrary = []; // Array to hold all the books in the library
 
@@ -36,17 +38,36 @@ function displayBooks() {
     <p>- <strong>Author</strong>: ${book.author}</p>
     <p>- <strong>Pages</strong>: ${book.pages}</p>
     <p>- <strong>Status</strong>: ${book.read ? "Read" : "Not Read"}</p>
-    <button class="remove-book" data-index="${index}">Remove</button>
     `;
 
-    libraryContainer.appendChild(bookCard);
+    const buttonContainer = document.createElement("div"); // Container for buttons
+    buttonContainer.classList.add("button-container");
 
-    const removeButton = bookCard.querySelector(".remove-book");
-    removeButton.addEventListener("click", () => {
-      const indexToRemove = parseInt(removeButton.getAttribute("data-index"));
-      myLibrary.splice(indexToRemove, 1);
+    const toggleButton = document.createElement("button");
+    toggleButton.textContent = "Toggle Read Status";
+    toggleButton.classList.add("toggle-read-status");
+    toggleButton.setAttribute("data-index", index);
+
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "Remove";
+    removeButton.classList.add("remove-book");
+    removeButton.setAttribute("data-index", index);
+
+    buttonContainer.appendChild(toggleButton);
+    buttonContainer.appendChild(removeButton);
+    bookCard.appendChild(buttonContainer);
+
+    toggleButton.addEventListener("click", () => {
+      myLibrary[index].toggleReadStatus();
       displayBooks();
     });
+
+    removeButton.addEventListener("click", () => {
+      myLibrary.splice(index, 1);
+      displayBooks();
+    });
+
+    libraryContainer.appendChild(bookCard);
   });
 }
 
@@ -54,7 +75,6 @@ function displayBooks() {
 
 const newBookButton = document.getElementById("new-book-button");
 const bookDialog = document.getElementById("book-dialog");
-
 const closeBookDialog = document.getElementById("closeDialog");
 
 newBookButton.addEventListener("click", () => {
@@ -75,12 +95,10 @@ bookForm.addEventListener("submit", (event) => {
   const read = document.getElementById("read").checked ? "yes" : "no";
 
   addBookToLibrary(title, author, pages, read);
-
   displayBooks();
-
   bookDialog.close();
-
   bookForm.reset();
 });
 
+// Close the dialog and reset the form
 displayBooks();
