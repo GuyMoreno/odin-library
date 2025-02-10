@@ -23,55 +23,67 @@ function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(newBook); // Add the new book to the library array
 }
 
-// Function to display all books in the library on the webpage
 function displayBooks() {
-  const libraryContainer = document.getElementById("library-container"); //Get the container element
-  libraryContainer.innerHTML = ""; // Clear any existing books from the display
+  const libraryContainer = document.getElementById("library-container");
+  libraryContainer.innerHTML = "";
+
   myLibrary.forEach((book, index) => {
-    // Iterate through each book in the library and display its details
-    // Create a Card for each book
-    const bookCard = document.createElement("div"); // Create a div for each book
-    bookCard.setAttribute("id", "book-card");
-    // Insete book content to the card
-    bookCard.innerHTML = `
-    <h2> 📕 ${book.title}</h2>
-    <p>- <strong>Author</strong>: ${book.author}</p>
-    <p>- <strong>Pages</strong>: ${book.pages}</p>
-    <p>- <strong>Status</strong>: ${book.read ? "Read" : "Not Read"}</p>
-    `;
-
-    const buttonContainer = document.createElement("div"); // Container for buttons
-    buttonContainer.classList.add("button-container");
-
-    const toggleButton = document.createElement("button");
-    toggleButton.textContent = "Toggle Read Status";
-    toggleButton.classList.add("toggle-read-status");
-    toggleButton.setAttribute("data-index", index);
-
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "Remove";
-    removeButton.classList.add("remove-book");
-    removeButton.setAttribute("data-index", index);
-
-    buttonContainer.appendChild(toggleButton);
-    buttonContainer.appendChild(removeButton);
-    bookCard.appendChild(buttonContainer);
-
-    toggleButton.addEventListener("click", () => {
-      myLibrary[index].toggleReadStatus();
-      displayBooks();
-    });
-
-    removeButton.addEventListener("click", () => {
-      myLibrary.splice(index, 1);
-      displayBooks();
-    });
-
+    const bookCard = createBookCard(book, index);
     libraryContainer.appendChild(bookCard);
   });
 }
 
-// displayBooks();
+function createBookCard(book, index) {
+  const bookCard = document.createElement("div");
+  bookCard.setAttribute("id", "book-card");
+
+  bookCard.innerHTML = `
+  <h2> 📕 ${book.title}</h2>
+  <p>- <strong>Author</strong>: ${book.author}</p>
+  <p>- <strong>Pages</strong>: ${book.pages}</p>
+  <p>- <strong>Status</strong>: ${book.read ? "Read" : "Not Read"}</p>
+  `;
+
+  const buttonContainer = createButtonContainer(index);
+  bookCard.appendChild(buttonContainer);
+
+  return bookCard;
+}
+
+function createButtonContainer(index) {
+  const buttonContainer = document.createElement("div");
+  buttonContainer.classList.add("button-container");
+
+  const toggleButton = createButton(index, "toggle");
+  const removeButton = createButton(index, "remove");
+
+  buttonContainer.appendChild(toggleButton);
+  buttonContainer.appendChild(removeButton);
+
+  return buttonContainer;
+}
+
+function createButton(index, type) {
+  const button = document.createElement("div");
+  button.setAttribute("data-index", index);
+
+  if (type === "toggle") {
+    button.textContent = "Toggle Read Status";
+    button.classList.add("toggle-read-status");
+    button.onclick = () => {
+      myLibrary[index].toggleReadStatus();
+      displayBooks();
+    };
+  } else if (type === "remove") {
+    button.textContent = "Remove";
+    button.classList.add("remove-book");
+    button.onclick = () => {
+      myLibrary.splice(index, 1);
+      displayBooks();
+    };
+  }
+  return button;
+}
 
 const newBookButton = document.getElementById("new-book-button");
 const bookDialog = document.getElementById("book-dialog");

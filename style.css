@@ -34,66 +34,57 @@ h1 {
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
-button {
-  /* margin-right: 10px; */
-  /* padding: 0.7em 1vw; */
-  background-color: #c1c5c1;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1vw;
-}
-
-#new-book-button {
-  background-color: #555655;
-  color: white;
-  border: none;
-  padding: 0.7em 1vw;
-  font-size: 1vw;
-  cursor: pointer;
-  transition: background-color 1s;
-}
-
-#new-book-button:hover {
-  background-color: darkslategrey;
-  font-weight: bold;
-  transition: background-color 1s;
-}
-
-/*  */
-
-/* asfasf */
-
 .button-container {
   display: flex;
-  gap: 10px;
+  gap: 15px; /* מרווח של 15px בין הכפתורים */
   margin-top: 10px;
 }
 
-.button-container button {
-  padding: 8px 12px;
+button {
+  padding: 10px 20px;
+  background-color: #c1c5c1;
+  color: rgb(255, 255, 255);
+  font-weight: 500;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s ease;
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.3s;
+}
+
+button:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  font-weight: bolder;
 }
 
 .toggle-read-status {
-  background-color: #4caf50;
-  color: white;
+  background-color: white;
+  border: 2px solid rgb(34, 164, 52);
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  transition: background 0.3s, transform 0.3s;
 }
 
 .toggle-read-status:hover {
-  background-color: #45a049;
-}
-
-.remove-book {
-  background-color: #f44336;
+  background-color: rgb(34, 164, 52);
   color: white;
 }
 
+.remove-book {
+  background-color: white;
+  color: red;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  transition: background 0.3s, transform 0.3s;
+}
+
 .remove-book:hover {
-  background-color: #d32f2f;
+  background-color: red;
+  color: white;
 }
