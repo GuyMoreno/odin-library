@@ -1,20 +1,22 @@
-// Constructor function to create a Book object
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read.toLowerCase() === "yes";
-  this.info = function () {
+// start
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read.toLowerCase() === "yes";
+  }
+  // Method num1 (using getter)
+  get info() {
     return `${this.title} by ${this.author}, ${this.pages} pages, ${
       this.read ? "Read" : "Not Read"
     }`;
-  };
+  }
+  // Method num2
+  toggleReadStatus() {
+    this.read = !this.read;
+  }
 }
-
-Book.prototype.toggleReadStatus = function () {
-  this.read = !this.read;
-};
-
 const myLibrary = []; // Array to hold all the books in the library
 
 // Function to add a new book to the library
@@ -35,15 +37,28 @@ function displayBooks() {
 
 function createBookCard(book, index) {
   const bookCard = document.createElement("div");
-  bookCard.setAttribute("id", "book-card");
+  bookCard.classList.add("book-card"); // Use class instead of ID
 
-  bookCard.innerHTML = `
-  <h2> 📕 ${book.title}</h2>
-  <p>- <strong>Author</strong>: ${book.author}</p>
-  <p>- <strong>Pages</strong>: ${book.pages}</p>
-  <p>- <strong>Status</strong>: ${book.read ? "Read" : "Not Read"}</p>
-  `;
+  const titleElement = document.createElement("h2");
+  titleElement.textContent = `📕 ${book.title}`;
+  bookCard.appendChild(titleElement);
 
+  // Create and append the author paragraph
+  const authorElement = document.createElement("p");
+  authorElement.textContent = `- Author: ${book.author}`;
+  bookCard.appendChild(authorElement);
+
+  // Create and append the pages paragraph
+  const pagesElement = document.createElement("p");
+  pagesElement.textContent = `- Pages: ${book.pages}`;
+  bookCard.appendChild(pagesElement);
+
+  // Create and append the status paragraph
+  const statusElement = document.createElement("p");
+  statusElement.textContent = `- Status: ${book.read ? "Read" : "Not Read"}`;
+  bookCard.appendChild(statusElement);
+
+  // Create button container and append to the card
   const buttonContainer = createButtonContainer(index);
   bookCard.appendChild(buttonContainer);
 
@@ -64,7 +79,7 @@ function createButtonContainer(index) {
 }
 
 function createButton(index, type) {
-  const button = document.createElement("div");
+  const button = document.createElement("button");
   button.setAttribute("data-index", index);
 
   if (type === "toggle") {
@@ -105,6 +120,13 @@ bookForm.addEventListener("submit", (event) => {
   const author = document.getElementById("author").value;
   const pages = document.getElementById("pages").value;
   const read = document.getElementById("read").checked ? "yes" : "no";
+
+  if (!title || !author || isNaN(pages) || pages <= 0) {
+    alert(
+      "Please enter valid book details: Title, Author, and a positive number for Pages."
+    );
+    return;
+  }
 
   addBookToLibrary(title, author, pages, read);
   displayBooks();
