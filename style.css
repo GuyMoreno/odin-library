@@ -1,5 +1,10 @@
 * {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  box-sizing: border-box; /* Good practice to include this for consistent sizing */
+}
+
+body {
+  margin: 0; /* Remove default body margin */
 }
 
 h1 {
@@ -11,45 +16,58 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 20px; /* Increased gap for better spacing */
+  padding: 20px; /* Add some padding around the container */
 }
 
 #library-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center; /* Use center for better alignment when fewer cards */
+  flex-wrap: wrap;
+  gap: 20px; /* Increased gap for better spacing between cards */
 }
 
-#book-card {
-  /* display: flex; */
+.book-card {
   background-color: lightgrey;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border: 1px solid #ccc;
   padding: 20px;
-  margin: 10px;
   border-radius: 5px;
-  width: 200px;
+  width: 250px; /* Slightly wider cards for better content display */
   gap: 10px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center text within the card */
+}
+
+.book-card h2 {
+  margin-top: 0; /* Remove default margin for h2 */
+  margin-bottom: 10px;
+}
+
+.book-card p {
+  margin: 5px 0; /* Adjust vertical margin for paragraphs */
 }
 
 .button-container {
   display: flex;
-  gap: 15px; /* מרווח של 15px בין הכפתורים */
-  margin-top: 10px;
+  gap: 15px; /* Spacing between buttons */
+  margin-top: 15px; /* More space above buttons */
 }
 
 button {
   padding: 10px 20px;
   background-color: #c1c5c1;
-  color: rgb(255, 255, 255);
+  color: white;
   font-weight: 500;
-  border: 1px solid;
+  border: none; /* Use `none` instead of `1px solid` if you want no border by default */
   border-radius: 10px;
   cursor: pointer;
   font-size: 1rem;
-  transition: background 0.3s, transform 0.3s;
+  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 button:hover {
@@ -59,13 +77,9 @@ button:hover {
 }
 
 button.toggle-read-status {
+  background-color: rgb(76, 175, 80); /* A bit more vibrant green */
   border: 2px solid rgb(34, 164, 52);
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.7rem;
-  transition: background 0.3s, transform 0.3s;
+  font-size: 0.9rem; /* Slightly larger font for readability */
 }
 
 .toggle-read-status:hover {
@@ -74,14 +88,88 @@ button.toggle-read-status {
 }
 
 button.remove-book {
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.7rem;
-  transition: background 0.3s, transform 0.3s;
+  background-color: rgb(244, 67, 54); /* A standard red */
+  border: 2px solid rgb(198, 40, 40);
+  font-size: 0.9rem; /* Slightly larger font for readability */
 }
 
 .remove-book:hover {
-  background-color: red;
+  background-color: rgb(198, 40, 40);
   color: white;
+}
+
+/* Dialog specific styles */
+dialog {
+  border: none;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+dialog form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+dialog form label {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+dialog form input[type="text"],
+dialog form input[type="number"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+dialog form input[type="checkbox"] {
+  width: auto; /* Allow checkbox to take its natural width */
+  margin-top: 5px;
+}
+
+dialog form button {
+  margin-top: 15px;
+}
+
+/* Invalid fields */
+input:invalid {
+  border-color: #d32f2f; /* A more standard error red */
+  background-color: #ffebee; /* Light red background */
+}
+
+input:focus:invalid {
+  outline: 2px solid #d32f2f; /* Clearer outline for invalid focus */
+  outline-offset: 2px;
+}
+
+/* Error message styles */
+.error {
+  display: block; /* Make it a block element to ensure it takes full width */
+  width: 100%;
+  padding: 0;
+  font-size: 0.8rem; /* Slightly smaller font size */
+  color: white;
+  background-color: #d32f2f;
+  border-radius: 4px; /* Consistent border radius */
+  box-sizing: border-box;
+  margin-top: 5px; /* Space above the error message */
+  opacity: 0; /* Hidden by default */
+  height: 0; /* Collapse space when hidden */
+  overflow: hidden; /* Hide overflow content */
+  transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out,
+    padding 0.3s ease-in-out; /* Smooth transition */
+}
+
+.error.active {
+  padding: 0.5em; /* More padding for better readability */
+  opacity: 1; /* Visible when active */
+  height: auto; /* Allow height to adjust */
+  font-weight: 500;
 }

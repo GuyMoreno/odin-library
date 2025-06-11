@@ -4,46 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Document</title>
+    <title>My Library App</title>
   </head>
   <body>
     <h1>My Library</h1>
     <div class="container">
       <button id="new-book-button">New Book</button>
-      <!-- Dialog window to add a new book -->
       <dialog id="book-dialog">
-        <form id="book-form">
+        <form id="book-form" novalidate>
           <label for="title">Title:</label>
           <input
             type="text"
             id="title"
             name="title"
-            placeholder="The Hobbit"
             required
-          /><br /><br />
+            minlength="2"
+            placeholder="The Hobbit"
+          />
+          <span class="error" id="titleError" aria-live="polite"></span>
 
           <label for="author">Author:</label>
           <input
             type="text"
             id="author"
             name="author"
-            placeholder="J. R. R. Tolkien"
             required
-          /><br /><br />
+            minlength="2"
+            placeholder="J. R. R. Tolkien"
+          />
+          <span class="error" id="authorError" aria-live="polite"></span>
 
           <label for="pages">Pages:</label>
           <input
             type="number"
             id="pages"
             name="pages"
-            placeholder="310"
             required
-          /><br /><br />
+            min="1"
+            max="1500"
+            placeholder="310"
+          />
+          <span class="error" id="pagesError" aria-live="polite"></span>
 
           <label for="read">Has it been read?</label>
-          <input type="checkbox" id="read" name="read" /><br /><br />
+          <input type="checkbox" id="read" name="read" />
 
-          <!-- Submit and Cancel buttons -->
           <button type="submit" id="add-book">Add Book</button>
           <button type="button" id="closeDialog">Cancel</button>
         </form>
